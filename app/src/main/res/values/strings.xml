@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SMSGateway</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="turn_off_forward">Press to Start</string>
+    <string name="turn_on_forward">Press to Stop</string>
+    <string name="btn_display">Display</string>
+
+</resources>
