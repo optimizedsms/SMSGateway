@@ -190,8 +190,6 @@ public class Broadcast implements Runnable {
                 if (socket != null)
                     socket.close();
                 Log.v(tag," broadcast:"+e);
-                Log.v(tag," sleeping 3 seconds");
-                try { Thread.sleep(3000); } catch (Exception e1) {};
             }
         }
         Log.v(tag,"broadcast thread done");
