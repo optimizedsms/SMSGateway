@@ -85,11 +85,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 String onText = tb.getTextOn().toString();
 
                 if (currentText.equals(tb.getTextOff())) {
-                    keepAliveThread.interrupt();
-                    thread.interrupt();;
-                    broadcastThread.interrupt();
+                    // try to interrupt any running threads
+                    try {keepAliveThread.interrupt(); } catch(Exception e) {}
+                    try {thread.interrupt(); }  catch (Exception e) {};
+                    try {broadcastThread.interrupt(); } catch (Exception e) {};
                 } else {
-
                    // we are off, turn on
 
                     if (keepAlive != null && keepAlive.getServiceState())

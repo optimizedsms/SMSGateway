@@ -59,7 +59,7 @@ public class Broadcast implements Runnable {
     @TargetApi(4)
     public void setMulticastLock()
     {
-       try {
+        try {
             WifiManager wifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
             if (wifi != null) {
                 lock = wifi.createMulticastLock("Log_Tag");
@@ -68,14 +68,14 @@ public class Broadcast implements Runnable {
             }
         }
         catch (Exception e) {
-         Log.v(tag, "Unable to acquire lock");
+            Log.v(tag, "Unable to acquire lock");
         }
-      }
+    }
 
     @TargetApi(4)
     public void freeMulticastLock()
     {
-       try {
+        try {
             lock.release();
         } catch (Exception e) {
             Log.v(tag, "unable to release lock");
@@ -169,29 +169,30 @@ public class Broadcast implements Runnable {
 
         while(Thread.currentThread().isInterrupted() == false) {
 
-        try {
-            ConnectivityManager connManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            try {
+                ConnectivityManager connManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-            if (mWifi.isConnected()) {
-                ipaddress = Utils.getIPAddress(true);
-                setWifiStatus("Wifi Status: Connected", Color.GREEN);
-                setMiIpText(ipaddress);
+                if (mWifi.isConnected()) {
+                    ipaddress = Utils.getIPAddress(true);
+                    setWifiStatus("Wifi Status: Connected", Color.GREEN);
+                    setMiIpText(ipaddress);
+                }
+                else {
+                    ipaddress = "127.0.0.1";
+                    setWifiStatus("Wifi Status: Disconnected", Color.RED);
+                }
+
+                whatever(ipaddress);
+                Thread.sleep(1000);
             }
-            else {
-                ipaddress = "127.0.0.1";
-                setWifiStatus("Wifi Status: Disconnected", Color.RED);
+            catch (Exception e) {
+                if (socket != null)
+                    socket.close();
+                Log.v(tag," broadcast:"+e);
+                Log.v(tag," sleeping 3 seconds");
+                try { Thread.sleep(3000); } catch (Exception e1) {};
             }
-
-            whatever(ipaddress);
-            Thread.sleep(1000);
-        }
-        catch (Exception e) {
-            if (socket != null)
-             socket.close();
-            Log.v(tag," broadcast:"+e);
-
-        }
         }
         Log.v(tag,"broadcast thread done");
 
